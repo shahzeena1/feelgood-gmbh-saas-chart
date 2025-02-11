@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "feelgood-gmbh-saas-chart.fullname" . }}-schemagen
+  labels:
+    {{- include "feelgood-gmbh-saas-chart.labels" . | nindent 4 }}
+spec:
+  template:
+    spec:
+      containers:
+        - name: schemagen
+          image: {{ .Values.image.schemagen }}
+          env:
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "feelgood-gmbh-saas-chart.fullname" . }}-secrets
+                  key: db-username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "feelgood-gmbh-saas-chart.fullname" . }}-secrets
+                  key: db-password
+      restartPolicy: Never
+  backoffLimit: 4

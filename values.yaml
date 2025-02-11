@@ -1,0 +1,83 @@
+replicaCount: 1
+
+image:
+  nginx: your-docker-repo/nginx-custom:latest
+  tomcat: tomcat:9-jdk11
+  artemis: vromero/activemq-artemis
+  schemagen: your-docker-repo/schemagen:latest
+  pullPolicy: IfNotPresent
+
+nginx:
+  servicePort: 80
+  containerPort: 80
+
+tomcat:
+  containerPort: 8080
+
+artemis:
+  containerPort: 61616
+
+keycloak:
+  enabled: true
+  serverUrl: http://keycloak:8080/auth
+  realm: your-realm
+  clientId: your-client-id
+
+maintenancePage:
+  enabled: true
+  image: nginx:latest
+
+ingress:
+  host: example.com
+
+secrets:
+  dbUsername: your-db-username
+  dbPassword: your-db-password
+
+tenants:
+  - name: tenant1
+    dbUsername: tenant1-db-username
+    dbPassword: tenant1-db-password
+    maintenancePage: |
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Maintenance</title>
+        <style>
+          body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+          }
+          .container {
+            text-align: center;
+          }
+          h1 {
+            color: #333;
+          }
+          p {
+            color: #666;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>We'll be back soon!</h1>
+          <p>We're currently performing scheduled maintenance. Thank you for your patience.</p>
+        </div>
+      </body>
+      </html>
+
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: {}
+
+affinity: {}

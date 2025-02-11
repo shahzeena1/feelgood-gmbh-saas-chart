@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "feelgood-gmbh-saas-chart.fullname" . }}-app
+  labels:
+    {{- include "feelgood-gmbh-saas-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "feelgood-gmbh-saas-chart.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "feelgood-gmbh-saas-chart.name" . }}
+    spec:
+      containers:
+        - name: nginx
+          image: {{ .Values.image.nginx }}
+          ports:
+            - containerPort: {{ .Values.nginx.containerPort }}
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d
+              name: nginx-config
+        - name: tomcat
+          image: {{ .Values.image.tomcat }}
+          ports:
+            - containerPort: {{ .Values.tomcat.containerPort }}
+        - name: artemis
+          image: {{ .Values.image.artemis }}
+          ports:
+            - containerPort: {{ .Values.artemis.containerPort }}
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: {{ include "feelgood-gmbh-saas-chart.fullname" . }}-nginx-config

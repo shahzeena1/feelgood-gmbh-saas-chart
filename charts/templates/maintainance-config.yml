@@ -1,0 +1,10 @@
+{{- range .Values.tenants }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: maintenance-html-{{ .name }}
+  namespace: {{ .name }}
+data:
+  maintenance.html: |
+{{ .maintenancePage | indent 4 }}
+{{- end }}
