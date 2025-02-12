@@ -28,7 +28,7 @@ maintenancePage:
   image: nginx:latest
 
 ingress:
-  host: tenant1.feelgood.com
+  host: tenant-1.feelgood.com
 
 secrets:
   dbUsername: username
@@ -36,7 +36,7 @@ secrets:
   dbUrl: db-url  
   
 tenants:
-  - name: tenant1
+  - name: tenant-1
     dbUsername: username
     dbPassword: password
     dbUrl: db-url  
