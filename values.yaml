@@ -1,10 +1,10 @@
 replicaCount: 1
 
 image:
-  nginx: your-docker-repo/nginx-custom:latest
+  nginx: docker/nginx-custom:latest
   tomcat: tomcat:9-jdk11
   artemis: vromero/activemq-artemis
-  schemagen: your-docker-repo/schemagen:latest
+  schemagen: docker/schemagen:latest  
   pullPolicy: IfNotPresent
 
 nginx:
@@ -20,24 +20,26 @@ artemis:
 keycloak:
   enabled: true
   serverUrl: http://keycloak:8080/auth
-  realm: your-realm
-  clientId: your-client-id
+  realm: xyz
+  clientId: key123
 
 maintenancePage:
   enabled: true
   image: nginx:latest
 
 ingress:
-  host: example.com
+  host: tenant1.feelgood.com
 
 secrets:
-  dbUsername: your-db-username
-  dbPassword: your-db-password
-
+  dbUsername: username
+  dbPassword: password
+  dbUrl: db-url  
+  
 tenants:
   - name: tenant1
-    dbUsername: tenant1-db-username
-    dbPassword: tenant1-db-password
+    dbUsername: username
+    dbPassword: password
+    dbUrl: db-url  
     maintenancePage: |
       <!DOCTYPE html>
       <html lang="en">
@@ -72,7 +74,6 @@ tenants:
         </div>
       </body>
       </html>
-
 
 resources: {}
 
