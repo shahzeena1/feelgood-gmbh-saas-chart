@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: central-config
+  namespace: {{ .Release.Namespace }} 
+data:
+  tenants: |
+    {{- range .Values.tenants }}
+    - name: {{ .name }}
+      nginx_image: "{{ .nginx_image }}"
+      tomcat_image: "{{ .tomcat_image }}"
+      artemis_image: "{{ .artemis_image }}"
+      db_url: "{{ .db_url }}"
+    {{- end }}

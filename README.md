@@ -24,7 +24,8 @@ feelgood-gmbh-saas-chart/
 ├── charts/
 ├── templates/
 │   ├── argocd-application.yaml
-│   ├── configmap.yaml
+│   ├── nginx-config.yaml
+│   ├── central-config.yaml
 │   ├── deployment.yaml
 │   ├── ingress.yaml
 │   ├── maintainance-config.yml
